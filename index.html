@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <title>Maad Yasser - Development & Training Services</title>
     <style>
         :root {
@@ -286,151 +286,439 @@
             position: relative;
             display: flex;
             align-items: center;
+            flex-grow: 1;
+            justify-content: center;
             gap: 0.5rem;
+            border-radius: 6px;
         }
 
         .toggle-btn:hover {
             color: var(--primary);
+            background: var(--hover-light);
         }
 
         .toggle-btn.active {
             color: var(--primary);
-            background: transparent;
+            background: var(--hover-light);
         }
 
-        .toggle-btn:first-child::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 1px;
-            height: 60%;
-            background: var(--border-light);
-        }
-
-        .toggle-btn::before {
-            content: '⚡';
+        .header-subtitle {
+            max-width: 600px;
+            margin: 1.5rem auto;
+            color: var(--text-light);
             font-size: 1.2rem;
+            line-height: 1.6;
         }
 
-        .toggle-btn:last-child::before {
-            content: '📚';
+        .contact-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card-light);
+            padding: 1rem;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            z-index: 1000;
         }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-item:hover {
+            color: var(--primary);
+        }
+
+        .controls {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 1000;
+        }
+
+        .control-btn {
+            background: var(--card-light);
+            border: 1px solid var(--border-light);
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Add padding to container to account for fixed contact bar */
+        .container {
+            padding-bottom: 5rem;
+        }
+
+        [dir="rtl"] .list li::before {
+            margin-right: 0;
+            margin-left: 0.8rem;
+        }
+
+        [dir="rtl"] .list li:hover {
+            transform: translateX(-5px);
+        }
+
+        [dir="rtl"] .note {
+            border-left: none;
+            border-right: 3px solid var(--primary);
+            border-radius: 6px 0 0 6px;
+        }
+
     </style>
 </head>
 <body>
-    <button class="theme-switch" onclick="toggleTheme()" aria-label="Toggle dark mode">
-        🌓
-    </button>
+
+    <div class="controls" style="direction: ltr !important;">
+        <button class="control-btn" onclick="toggleLanguage()" aria-label="Toggle language">
+            عربي
+        </button>
+        <button class="control-btn" onclick="toggleTheme()" aria-label="Toggle dark mode">
+            🌓
+        </button>
+    </div>
+
 
 
     <div class="container">
         <header>
-            <h1>Professional Development & Training Services</h1>
+            <h1 id="title">Professional Development & Training Services</h1>
             <div class="divider"></div>
+            <p class="header-subtitle" id="subtitle">
+                Custom web and mobile development tailored to your needs, with expert training in English and Arabic
+            </p>
         </header>
+        <div class="contact-bar" style="direction: ltr !important;">
+            <a href="tel:+60196414375" class="contact-item">
+                📞 +60196414375
+            </a>
+            <a href="https://wa.me/60196414375" class="contact-item" target="_blank">
+                💬 WhatsApp
+            </a>
+            <a href="https://www.linkedin.com/in/yamaad/" class="contact-item" target="_blank">
+                👥 LinkedIn
+            </a>
+            <a href="mailto:maadyasser@gmail.com" class="contact-item">
+                ✉️ maadyasser@gmail.com
+            </a>
+        </div>
+
 
         <div class="services-toggle">
-            <button class="toggle-btn active" onclick="showService('development')">Development Services</button>
-            <button class="toggle-btn" onclick="showService('training')">Training Services</button>
+            <button class="toggle-btn active" onclick="showService('development')"><i class="bi bi-code-square me-2"></i> <span id="devServices">Development Services</span></button>
+            <button class="toggle-btn" onclick="showService('training')"><i class="bi bi-mortarboard me-2"></i> <span id="trainingServices">Training Services</span></button>
         </div>
 
         <section class="card service-section" id="development-services">
-            <h2>Development Services</h2>
-            <p class="subtitle">Custom web and mobile development tailored to your needs.</p>
+            <h2 id="devServicesTitle">Development Services</h2>
+            <p class="subtitle" id="devSubtitle">Custom web and mobile development tailored to your needs.</p>
 
             <div class="grid">
                 <div class="package">
-                    <h3>Basic Web Development</h3>
-                    <p>Static websites, landing pages, and simple web applications</p>
-                    <p class="price">Starting from RM2,500 per project</p>
-                    <p>Estimated Timeline: 2-4 weeks*</p>
+                    <h3 id="basicTitle">Basic Web Development</h3>
+                    <p id="basicDesc">Static websites, landing pages, and simple web applications</p>
+                    <p class="price" id="basicPrice">Starting from RM2,500 per project</p>
+                    <p id="basicTimeline">Estimated Timeline: 2-4 weeks*</p>
                 </div>
 
                 <div class="package">
-                    <h3>Custom Development</h3>
-                    <p>Dynamic web applications, mobile apps, and enterprise solutions</p>
-                    <p class="price">Starting from RM5,000 per project</p>
-                    <p>Timeline varies based on project scope*</p>
+                    <h3 id="customTitle">Custom Development</h3>
+                    <p id="customDesc">Dynamic web applications, mobile apps, and enterprise solutions</p>
+                    <p class="price" id="customPrice">Starting from RM5,000 per project</p>
+                    <p id="customTimeline">Timeline varies based on project scope*</p>
                 </div>
             </div>
 
-            <p class="note">*Final timeline and pricing will be determined after consultation based on specific requirements and technical complexity.</p>
+            <p class="note" id="timelineNote">*Final timeline and pricing will be determined after consultation based on specific requirements and technical complexity.</p>
 
-            <h3>Engagement Models</h3>
+            <h3 id="engagementTitle">Engagement Models</h3>
             <ul class="list">
-                <li>Hourly Rate: RM65/hour</li>
-                <li>Project-Based: Custom quote provided after requirements analysis</li>
-                <li>Monthly Retainer: 5% discount for minimum 20 hours/month commitment</li>
+                <li id="hourlyRate">Hourly Rate: RM65/hour</li>
+                <li id="projectBased">Project-Based: Custom quote provided after requirements analysis</li>
+                <li id="monthlyRetainer">Monthly Retainer: 5% discount for minimum 20 hours/month commitment</li>
             </ul>
         </section>
 
         <section class="card service-section" id="training-services" style="display: none;">
-            <h2>Training Services</h2>
-            <p class="subtitle">Personalized programming education in English and Arabic, focused on practical, project-based learning.</p>
+            <h2 id="trainingTitle">Training Services</h2>
+            <p class="subtitle" id="trainingSubtitle">Personalized programming education in English and Arabic, focused on practical, project-based learning.</p>
 
-            <h3>Training Options</h3>
+            <h3 id="trainingOptionsTitle">Training Options</h3>
             <div class="grid">
                 <div class="package">
-                    <h3>One-on-One Sessions</h3>
-                    <p class="price">RM65/hour</p>
+                    <h3 id="oneOnOne">One-on-One Sessions</h3>
+                    <p class="price" id="oneOnOnePrice">RM65/hour</p>
                 </div>
                 <div class="package">
-                    <h3>Small Group Sessions (2-4 people)</h3>
-                    <p class="price">RM45/person/hour</p>
+                    <h3 id="groupSessions">Small Group Sessions (2-4 people)</h3>
+                    <p class="price" id="groupPrice">RM45/person/hour</p>
                 </div>
             </div>
 
-            <h3>Course Packages</h3>
+            <h3 id="coursePackages">Course Packages</h3>
             <div class="grid">
                 <div class="package">
-                    <h3>Programming Fundamentals</h3>
-                    <p>Perfect for complete beginners</p>
+                    <h3 id="fundamentalsTitle">Programming Fundamentals</h3>
+                    <p id="fundamentalsDesc">Perfect for complete beginners</p>
                     <ul class="list">
-                        <li>6 sessions (1.5 hours each)</li>
-                        <li>Total: 9 hours</li>
-                        <li class="price">RM500/person</li>
+                        <li id="fundamentalsSessions">6 sessions (1.5 hours each)</li>
+                        <li id="fundamentalsTotal">Total: 9 hours</li>
+                        <li class="price" id="fundamentalsPrice">RM500/person</li>
                     </ul>
                 </div>
 
                 <div class="package">
-                    <h3>Web Development Basics</h3>
-                    <p>For those with basic programming knowledge</p>
+                    <h3 id="webDevTitle">Web Development Basics</h3>
+                    <p id="webDevDesc">For those with basic programming knowledge</p>
                     <ul class="list">
-                        <li>8 sessions (1.5 hours each)</li>
-                        <li>Total: 12 hours</li>
-                        <li class="price">RM650/person</li>
+                        <li id="webDevSessions">8 sessions (1.5 hours each)</li>
+                        <li id="webDevTotal">Total: 12 hours</li>
+                        <li class="price" id="webDevPrice">RM650/person</li>
                     </ul>
                 </div>
             </div>
 
             <div class="coming-soon">
-                <h3>Coming Soon</h3>
+                <h3 id="comingSoon">Coming Soon</h3>
                 <div class="grid">
                     <ul class="list">
-                        <li>AI Integration and Prompt Engineering</li>
-                        <li>MERN Stack Development</li>
-                        <li>Real-time Application Development</li>
+                        <li id="course1">AI Integration and Prompt Engineering</li>
+                        <li id="course2">MERN Stack Development</li>
+                        <li id="course3">Real-time Application Development</li>
                     </ul>
                     <ul class="list">
-                        <li>Full-Stack Development with Modern JavaScript</li>
-                        <li>Mobile First Web Application</li>
+                        <li id="course4">Full-Stack Development with Modern JavaScript</li>
+                        <li id="course5">Mobile First Web Application</li>
                     </ul>
                 </div>
             </div>
         </section>
 
         <section class="card">
-            <h2>Working Terms</h2>
+            <h2 id="termsTitle">Working Terms</h2>
             <ul class="list">
-                <li>Complimentary 30-minute free initial consultation</li>
-                <li>50% deposit required for project-based work</li>
-                <li>48-hour cancellation policy</li>
+                <li id="term1">Complimentary 30-minute free initial consultation</li>
+                <li id="term2">50% deposit required for project-based work</li>
+                <li id="term3">48-hour cancellation policy</li>
             </ul>
         </section>
     </div>
     <script>
+        // Theme toggle remains the same
+
+        // Language toggle functionality
+        const translations = {
+    en: {
+        // Header
+        title: "Professional Development & Training Services",
+        subtitle: "Custom web and mobile development tailored to your needs, with expert training in English and Arabic",
+        // button
+        devServices:'Development Services',
+        trainingServices:'Training Services',
+        // Development Services
+        devServices: "Development Services",
+        devSubtitle: "Custom web and mobile development tailored to your needs.",
+        
+        // Basic Package
+        basicTitle: "Basic Web Development",
+        basicDesc: "Static websites, landing pages, and simple web applications",
+        basicPrice: "Starting from RM2,500 per project",
+        basicTimeline: "Estimated Timeline: 2-4 weeks*",
+        
+        // Custom Package
+        customTitle: "Custom Development",
+        customDesc: "Dynamic web applications, mobile apps, and enterprise solutions",
+        customPrice: "Starting from RM5,000 per project",
+        customTimeline: "Timeline varies based on project scope*",
+        
+        // Note
+        timelineNote: "*Final timeline and pricing will be determined after consultation based on specific requirements and technical complexity.",
+        
+        // Engagement Models
+        engagementTitle: "Engagement Models",
+        hourlyRate: "Hourly Rate: RM65/hour",
+        projectBased: "Project-Based: Custom quote provided after requirements analysis",
+        monthlyRetainer: "Monthly Retainer: 5% discount for minimum 20 hours/month commitment",
+        
+        // Training Services
+        trainingTitle: "Training Services",
+        trainingSubtitle: "Personalized programming education in English and Arabic, focused on practical, project-based learning.",
+        
+        // Training Options
+        trainingOptionsTitle: "Training Options",
+        oneOnOne: "One-on-One Sessions",
+        oneOnOnePrice: "RM65/hour",
+        groupSessions: "Small Group Sessions (2-4 people)",
+        groupPrice: "RM45/person/hour",
+        
+        // Course Packages
+        coursePackages: "Course Packages",
+        
+        // Fundamentals Course
+        fundamentalsTitle: "Programming Fundamentals",
+        fundamentalsDesc: "Perfect for complete beginners",
+        fundamentalsSessions: "6 sessions (1.5 hours each)",
+        fundamentalsTotal: "Total: 9 hours",
+        fundamentalsPrice: "RM500/person",
+        
+        // Web Dev Course
+        webDevTitle: "Web Development Basics",
+        webDevDesc: "For those with basic programming knowledge",
+        webDevSessions: "8 sessions (1.5 hours each)",
+        webDevTotal: "Total: 12 hours",
+        webDevPrice: "RM650/person",
+        
+        // Coming Soon
+        comingSoon: "Coming Soon",
+        course1: "AI Integration and Prompt Engineering",
+        course2: "MERN Stack Development",
+        course3: "Real-time Application Development",
+        course4: "Full-Stack Development with Modern JavaScript",
+        course5: "Mobile First Web Application",
+        
+        // Working Terms
+        termsTitle: "Working Terms",
+        term1: "Complimentary 30-minute free initial consultation",
+        term2: "50% deposit required for project-based work",
+        term3: "48-hour cancellation policy"
+    },
+    ar: {
+        // Header
+        title: "خدمات التطوير والتدريب الاحترافية",
+        subtitle: "تطوير مخصص للويب والتطبيقات المحمولة، مع تدريب احترافي باللغتين العربية والإنجليزية",
+                // button
+                devServices:'خدمات التطوير',
+        trainingServices:'خدمات التدريب',
+        // Development Services
+        devServicesTitle: "خدمات التطوير",
+        devSubtitle: "تطوير مخصص للويب والتطبيقات المحمولة حسب احتياجاتك",
+        
+        // Basic Package
+        basicTitle: "تطوير الويب الأساسي",
+        basicDesc: "مواقع ثابتة، صفحات هبوط، وتطبيقات ويب بسيطة",
+        basicPrice: "يبدأ من 2,500 رينجت ماليزي للمشروع",
+        basicTimeline: "المدة المتوقعة: 2-4 أسابيع*",
+        
+        // Custom Package
+        customTitle: "التطوير المخصص",
+        customDesc: "تطبيقات ويب ديناميكية، تطبيقات جوال، وحلول للشركات",
+        customPrice: "يبدأ من 5,000 رينجت ماليزي للمشروع",
+        customTimeline: "تختلف المدة حسب نطاق المشروع*",
+        
+        // Note
+        timelineNote: "*سيتم تحديد المدة النهائية والتكلفة بعد الاستشارة بناءً على المتطلبات المحددة والتعقيد التقني.",
+        
+        // Engagement Models
+        engagementTitle: "نماذج العمل",
+        hourlyRate: "السعر بالساعة: 65 رينجت ماليزي/ساعة",
+        projectBased: "حسب المشروع: عرض سعر مخصص بعد تحليل المتطلبات",
+        monthlyRetainer: "العقد الشهري: خصم 5٪ لالتزام 20 ساعة/شهر كحد أدنى",
+        
+        // Training Services
+        trainingTitle: "خدمات التدريب",
+        trainingSubtitle: "تعليم برمجة مخصص باللغتين العربية والإنجليزية، مع التركيز على التعلم العملي القائم على المشاريع.",
+        
+        // Training Options
+        trainingOptionsTitle: "خيارات التدريب",
+        oneOnOne: "جلسات فردية",
+        oneOnOnePrice: "65 رينجت ماليزي/ساعة",
+        groupSessions: "جلسات مجموعات صغيرة (2-4 أشخاص)",
+        groupPrice: "45 رينجت ماليزي/شخص/ساعة",
+        
+        // Course Packages
+        coursePackages: "الحزم التدريبية",
+        
+        // Fundamentals Course
+        fundamentalsTitle: "أساسيات البرمجة",
+        fundamentalsDesc: "مثالي للمبتدئين",
+        fundamentalsSessions: "6 جلسات (1.5 ساعة لكل جلسة)",
+        fundamentalsTotal: "المجموع: 9 ساعات",
+        fundamentalsPrice: "500 رينجت ماليزي/شخص",
+        
+        // Web Dev Course
+        webDevTitle: "أساسيات تطوير الويب",
+        webDevDesc: "للذين لديهم معرفة أساسية بالبرمجة",
+        webDevSessions: "8 جلسات (1.5 ساعة لكل جلسة)",
+        webDevTotal: "المجموع: 12 ساعة",
+        webDevPrice: "650 رينجت ماليزي/شخص",
+        
+        // Coming Soon
+        comingSoon: "قريباً",
+        course1: "تكامل الذكاء الاصطناعي وهندسة الموجهات",
+        course2: "تطوير MERN Stack",
+        course3: "تطوير التطبيقات في الوقت الفعلي",
+        course4: "التطوير الشامل باستخدام جافا سكريبت الحديثة",
+        course5: "تطبيقات ويب للجوال أولاً",
+        
+        // Working Terms
+        termsTitle: "شروط العمل",
+        term1: "استشارة أولية مجانية لمدة 30 دقيقة",
+        term2: "دفعة مقدمة 50٪ مطلوبة للمشاريع",
+        term3: "سياسة إلغاء قبل 48 ساعة"
+    }
+};
+// Function to update all content
+function updateContent(lang) {
+    // Helper function to update element text if it exists
+    const updateText = (id, key) => {
+        const element = document.getElementById(id);
+        if (element && translations[lang][key]) {
+            element.textContent = translations[lang][key];
+        }
+    };
+
+    // Update all text content
+    Object.keys(translations[lang]).forEach(key => {
+        updateText(key, key);
+    });
+
+    // Update specific elements that might have different IDs or classes
+    // You'll need to add IDs to your HTML elements that match these
+    document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (translations[lang][key]) {
+            element.textContent = translations[lang][key];
+        }
+    });
+}
+
+// Modified toggle function
+function toggleLanguage() {
+    const html = document.documentElement;
+    const isEnglish = html.lang === 'en';
+    
+    // Toggle language and direction
+    html.lang = isEnglish ? 'ar' : 'en';
+    html.dir = isEnglish ? 'rtl' : 'ltr';
+    
+    // Update button text
+    const langBtn = document.querySelector('[onclick="toggleLanguage()"]');
+    langBtn.textContent = isEnglish ? 'En' : 'عربي';
+
+    // Update all content
+    updateContent(html.lang);
+}
         function toggleTheme() {
             const body = document.documentElement;
             if (body.getAttribute('data-theme') === 'dark') {
