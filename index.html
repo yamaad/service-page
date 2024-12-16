@@ -256,6 +256,67 @@
                 transition: none !important;
             }
         }
+
+        .services-toggle {
+            display: flex;
+            gap: 0;
+            justify-content: center;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+            background: var(--card-light);
+            padding: 0.25rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 100%;
+            height: 36px;
+            max-width: 1000px;
+
+        }
+
+        .toggle-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: var(--text-dark);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toggle-btn:hover {
+            color: var(--primary);
+        }
+
+        .toggle-btn.active {
+            color: var(--primary);
+            background: transparent;
+        }
+
+        .toggle-btn:first-child::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 60%;
+            background: var(--border-light);
+        }
+
+        .toggle-btn::before {
+            content: '⚡';
+            font-size: 1.2rem;
+        }
+
+        .toggle-btn:last-child::before {
+            content: '📚';
+        }
     </style>
 </head>
 <body>
@@ -270,7 +331,12 @@
             <div class="divider"></div>
         </header>
 
-        <section class="card">
+        <div class="services-toggle">
+            <button class="toggle-btn active" onclick="showService('development')">Development Services</button>
+            <button class="toggle-btn" onclick="showService('training')">Training Services</button>
+        </div>
+
+        <section class="card service-section" id="development-services">
             <h2>Development Services</h2>
             <p class="subtitle">Custom web and mobile development tailored to your needs.</p>
 
@@ -300,7 +366,7 @@
             </ul>
         </section>
 
-        <section class="card">
+        <section class="card service-section" id="training-services" style="display: none;">
             <h2>Training Services</h2>
             <p class="subtitle">Personalized programming education in English and Arabic, focused on practical, project-based learning.</p>
 
@@ -396,6 +462,27 @@
             card.style.animationPlayState = 'paused';
             observer.observe(card);
         });
+
+        function showService(service) {
+            // Hide all service sections
+            document.querySelectorAll('.service-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show the selected service section
+            document.getElementById(`${service}-services`).style.display = 'block';
+            
+            // Update button states
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Trigger animation
+            document.getElementById(`${service}-services`).style.animation = 'none';
+            document.getElementById(`${service}-services`).offsetHeight; // Trigger reflow
+            document.getElementById(`${service}-services`).style.animation = 'fadeInUp 0.6s ease forwards';
+        }
     </script>
 
 </body>
