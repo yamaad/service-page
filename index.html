@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Maad Yasser - Development & Training Services</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --text-dark: #1f2937;
+            --text-light: #4b5563;
+            --bg-light: #f9fafb;
+            --bg-dark: #111827;
+            --card-light: #ffffff;
+            --card-dark: #1f2937;
+            --border-light: #e5e7eb;
+            --border-dark: #374151;
+            --hover-light: rgba(37, 99, 235, 0.1);
+            --hover-dark: rgba(59, 130, 246, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --primary: #3b82f6;
+            --text-dark: #f3f4f6;
+            --text-light: #d1d5db;
+            --bg-light: var(--bg-dark);
+            --card-light: var(--card-dark);
+            --border-light: var(--border-dark);
+            --hover-light: var(--hover-dark);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            background: var(--bg-light);
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .theme-switch {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: var(--card-light);
+            border: 1px solid var(--border-light);
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: transform 0.3s;
+        }
+
+        .theme-switch:hover {
+            transform: scale(1.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(120deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .divider {
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        .card {
+            background: var(--card-light);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.4s; }
+
+        h2 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+        }
+
+        h3 {
+            color: var(--text-dark);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.3rem;
+        }
+
+        .subtitle {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .package {
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--hover-light);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+            z-index: 0;
+        }
+
+        .package:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .package > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .price {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 0.5rem 0;
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            background: var(--hover-light);
+            border-radius: 20px;
+        }
+
+        .list {
+            list-style: none;
+        }
+
+        .list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            transition: transform 0.2s ease;
+        }
+
+        .list li:hover {
+            transform: translateX(5px);
+        }
+
+        .list li::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            margin-right: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .coming-soon {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .coming-soon::after {
+            content: '🚀';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .note {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 1rem;
+            padding: 0.8rem;
+            border-left: 3px solid var(--primary);
+            background: var(--hover-light);
+            border-radius: 0 6px 6px 0;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-switch" onclick="toggleTheme()" aria-label="Toggle dark mode">
+        🌓
+    </button>
+
+
+    <div class="container">
+        <header>
+            <h1>Professional Development & Training Services</h1>
+            <div class="divider"></div>
+        </header>
+
+        <section class="card">
+            <h2>Development Services</h2>
+            <p class="subtitle">Custom web and mobile development tailored to your needs.</p>
+
+            <div class="grid">
+                <div class="package">
+                    <h3>Basic Web Development</h3>
+                    <p>Static websites, landing pages, and simple web applications</p>
+                    <p class="price">Starting from RM2,500 per project</p>
+                    <p>Estimated Timeline: 2-4 weeks*</p>
+                </div>
+
+                <div class="package">
+                    <h3>Custom Development</h3>
+                    <p>Dynamic web applications, mobile apps, and enterprise solutions</p>
+                    <p class="price">Starting from RM5,000 per project</p>
+                    <p>Timeline varies based on project scope*</p>
+                </div>
+            </div>
+
+            <p class="note">*Final timeline and pricing will be determined after consultation based on specific requirements and technical complexity.</p>
+
+            <h3>Engagement Models</h3>
+            <ul class="list">
+                <li>Hourly Rate: RM65/hour</li>
+                <li>Project-Based: Custom quote provided after requirements analysis</li>
+                <li>Monthly Retainer: 5% discount for minimum 20 hours/month commitment</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>Training Services</h2>
+            <p class="subtitle">Personalized programming education in English and Arabic, focused on practical, project-based learning.</p>
+
+            <h3>Training Options</h3>
+            <div class="grid">
+                <div class="package">
+                    <h3>One-on-One Sessions</h3>
+                    <p class="price">RM65/hour</p>
+                </div>
+                <div class="package">
+                    <h3>Small Group Sessions (2-4 people)</h3>
+                    <p class="price">RM45/person/hour</p>
+                </div>
+            </div>
+
+            <h3>Course Packages</h3>
+            <div class="grid">
+                <div class="package">
+                    <h3>Programming Fundamentals</h3>
+                    <p>Perfect for complete beginners</p>
+                    <ul class="list">
+                        <li>6 sessions (1.5 hours each)</li>
+                        <li>Total: 9 hours</li>
+                        <li class="price">RM500/person</li>
+                    </ul>
+                </div>
+
+                <div class="package">
+                    <h3>Web Development Basics</h3>
+                    <p>For those with basic programming knowledge</p>
+                    <ul class="list">
+                        <li>8 sessions (1.5 hours each)</li>
+                        <li>Total: 12 hours</li>
+                        <li class="price">RM650/person</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="coming-soon">
+                <h3>Coming Soon</h3>
+                <div class="grid">
+                    <ul class="list">
+                        <li>AI Integration and Prompt Engineering</li>
+                        <li>MERN Stack Development</li>
+                        <li>Real-time Application Development</li>
+                    </ul>
+                    <ul class="list">
+                        <li>Full-Stack Development with Modern JavaScript</li>
+                        <li>Mobile First Web Application</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Working Terms</h2>
+            <ul class="list">
+                <li>Complimentary 30-minute free initial consultation</li>
+                <li>50% deposit required for project-based work</li>
+                <li>48-hour cancellation policy</li>
+            </ul>
+        </section>
+    </div>
+    <script>
+        function toggleTheme() {
+            const body = document.documentElement;
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme') || 
+                          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+
+        // Add intersection observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.animationPlayState = 'paused';
+            observer.observe(card);
+        });
+    </script>
+
+</body>
+</html>
